@@ -1,0 +1,53 @@
+.formContainer{
+  &.articleFormContainer{
+    min-width: 400px;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    background: #fcfcfc;
+    padding: 20px 10px;
+    border-radius: 6px;
+
+    input, textarea{
+      width: 80%;
+    }
+    textarea{
+      resize:vertical;
+    }
+
+  }
+
+  input, textarea{
+    padding: 4px 8px;
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    outline: none;
+    border: 1px solid rgba(90, 90, 90, 0.44);
+    border-radius: 4px;
+    &:focus {
+      border: 1px solid rgba(83, 83, 83, 0.71);
+    }
+  }
+
+  .loginBtn, .registerBtn, .createBtn{
+    width: 100%;
+    height: 50px;
+  }
+
+}
+
+.grayBg{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.43);
+}
+
+
