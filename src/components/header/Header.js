@@ -39,9 +39,7 @@ const theme = createTheme({
 
 const Header = () =>  {
 
-    const [auth, setAuth] = useState(false)
     const user = useSelector(state => state.user)
-
 
     const renderLoginMenu = () => (
         <Link to='/login'>
@@ -53,7 +51,7 @@ const Header = () =>  {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ flexGrow: 1, marginBottom: '150px' }}>
+            <Box sx={{ flexGrow: 1, marginBottom: '150px' }} data-testid='HeaderComponent'>
                 <AppBar position="static">
                     <Toolbar>
                         <Grid container alignItems='center' justifyContent='space-between'>

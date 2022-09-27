@@ -110,14 +110,14 @@ const LoginForm = () => {
                         <Grid item xs={8}>
                             <Box sx={{position: 'relative'}}>
                                 <input
-                                    type={showPassword ? 'tet' : 'password'}
+                                    type={showPassword ? 'text' : 'password'}
                                     name='password'
                                     id='password'
                                     placeholder='Please enter your password'
                                     {...register('password')}
                                 />
                                 <Box sx={{position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)'}}>
-                                    <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                                    <IconButton onClick={() => setShowPassword(prev => !prev)} data-testid='eyeIcon'>
                                         {
                                             showPassword ? <VisibilityOffIcon fontSize='large' /> : <VisibilityIcon fontSize='large' />
                                         }

@@ -125,7 +125,7 @@ const RegisterForm = () => {
                                     {...register('password')}
                                 />
                                 <Box sx={{position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)'}}>
-                                    <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                                    <IconButton onClick={() => setShowPassword(prev => !prev)} data-testid='eyeIconPassword'>
                                         {
                                             showPassword ? <VisibilityOffIcon fontSize='large' /> : <VisibilityIcon fontSize='large' />
                                         }
@@ -154,7 +154,7 @@ const RegisterForm = () => {
                                     {...register('confirmPassword')}
                                 />
                                 <Box sx={{position: 'absolute', top: '50%', right: '0', transform: 'translateY(-50%)'}}>
-                                    <IconButton onClick={() => setShowConfirmPassword(prev => !prev)}>
+                                    <IconButton onClick={() => setShowConfirmPassword(prev => !prev)} data-testid='eyeIconConfirmation'>
                                         {
                                             showConfirmPassword ? <VisibilityOffIcon fontSize='large' /> : <VisibilityIcon fontSize='large' />
                                         }

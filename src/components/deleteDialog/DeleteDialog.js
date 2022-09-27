@@ -65,7 +65,7 @@ const DeleteDialog = ({open, setOpen, handleDeleteArticleById, articleIdClicked}
 
     return (
         <ThemeProvider theme={theme}>
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} data-testid='DeleteDialogComponent'>
                 <DialogTitle><Typography component='span' variant='h4'>WARNNING!</Typography></DialogTitle>
                 <DialogContent>
                     <DialogContentText>

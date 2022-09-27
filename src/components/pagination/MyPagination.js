@@ -24,6 +24,7 @@ const MyPagination = ({pageSize, setPage}) => {
     return (
         <Stack spacing={2}>
             <Pagination
+                data-testid='myPagination'
                 size='large'
                 count={data ? Math.ceil(data?.length / pageSize) : 0}
                 onChange={(e,page) => handlePageChange(e, page)}

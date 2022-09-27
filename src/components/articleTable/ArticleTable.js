@@ -51,7 +51,7 @@ const ArticleTable = ({page, articles}) => {
 
     return (
         <>
-            <Grid container alignItems='center' justifyContent='space-between'>
+            <Grid container alignItems='center' justifyContent='space-between' data-testid='ArticleTableComponent'>
                 <Grid item><Typography variant='h2'>Articles</Typography></Grid>
                 <Grid item>
                     <Button variant="outlined" size='large' onClick={()=>setShowArticleForm(true)}>

@@ -13,19 +13,6 @@ import {resetCurrentArticle} from "../../../features/activeArticleSlice/activeAr
 import {useState} from "react";
 import {useAddArticle, useUpdateArticleById} from "../../../hooks/useMutateArticle";
 
-
-// {
-//     "isbn": "9781484200766",
-//     "title": "Pro Git",
-//     "subtitle": "Everything you neeed to know about Git",
-//     "author": "Scott Chacon and Ben Straub",
-//     "published": "2014-11-18T00:00:00.000Z",
-//     "publisher": "Apress; 2nd edition",
-//     "pages": 458,
-//     "description": "Pro Git (Second Edition) is your fully-updated guide to Git and its usage in the modern world. Git has come a long way since it was first developed by Linus Torvalds for Linux kernel development. It has taken the open source world by storm since its inception in 2005, and this book teaches you how to use it like a pro.",
-//     "website": "https://git-scm.com/book/en/v2"
-// }
-
 const styles = {
     width: '100%'
 }
@@ -69,9 +56,9 @@ const theme = createTheme({
 
 const ArticleForm = ({page, setShowArticleForm, addOrUpdate, setAddOrUpdate}) => {
 
-    const {register, handleSubmit, formState: {errors}} = useForm({
-        resolver: yupResolver(articleSchema)
-    })
+    // const {register, handleSubmit, formState: {errors}} = useForm({
+    //     resolver: yupResolver(articleSchema)
+    // })
 
     const currentArticle = useSelector(state => state.currentArticle)
     const [article, setArticle] = useState(currentArticle);
@@ -112,15 +99,15 @@ const ArticleForm = ({page, setShowArticleForm, addOrUpdate, setAddOrUpdate}) =>
         dispatch(resetCurrentArticle())
     }
 
-    const handleAddArticle = (data) => {
-        mutateArticle(data)
+    const handleAddArticle = () => {
+        mutateArticle(article)
         setAddOrUpdate('add')
     }
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className='grayBg' onClick={()=>handleCloseForm()} />
-            <Box className='formContainer articleFormContainer'>
+            <Box data-testid="grayBg" className='grayBg' onClick={()=>handleCloseForm()} />
+            <Box className='formContainer articleFormContainer' data-testid='ArticleFormComponent'>
                 <Grid
                     container
                     direction="column"
@@ -152,12 +139,11 @@ const ArticleForm = ({page, setShowArticleForm, addOrUpdate, setAddOrUpdate}) =>
                                     type="text"
                                     name='isbn'
                                     id='isbn'
-                                    value={article.isbn}
+                                    value={article.isbn || ''}
                                     onChange={e=>handleUpdateArticle(e)}
                                     placeholder='Please enter isbn'
-                                    {...register('isbn')}
                                 />
-                                <Typography variant='body1'>{errors.isbn?.message}</Typography>
+                                {/*<Typography variant='body1' data-testid='isbnValidationMessage'>{errors.isbn?.message}</Typography>*/}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -176,11 +162,10 @@ const ArticleForm = ({page, setShowArticleForm, addOrUpdate, setAddOrUpdate}) =>
                                     name='title'
                                     id='title'
                                     placeholder='Please enter title'
-                                    value={article.title}
+                                    value={article.title || ''}
                                     onChange={e=>handleUpdateArticle(e)}
-                                    {...register('title')}
                                 />
-                                <Typography variant='body1'>{errors.title?.message}</Typography>
+                                {/*<Typography variant='body1' data-testid='titleValidationMessage'>{errors.title?.message}</Typography>*/}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -314,7 +299,7 @@ const ArticleForm = ({page, setShowArticleForm, addOrUpdate, setAddOrUpdate}) =>
                     <Grid item sx={styles}>
                         <Grid sx={styles} container justifyContent='flex-end'>
                             <Grid item xs={2}>
-                                <Button onClick={handleSubmit(handleAddArticle)} disableElevation variant='contained' className='createBtn'>
+                                <Button onClick={handleAddArticle} disableElevation variant='contained' className='createBtn'>
                                     <Typography variant='h6'>Confirm</Typography>
                                 </Button>
                             </Grid>

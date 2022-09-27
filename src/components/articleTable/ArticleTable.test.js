@@ -1,70 +1,202 @@
-import {fireEvent, render, screen} from '@testing-library/react'
+import {render, fireEvent, screen, act} from '@testing-library/react'
 import ArticleTable from './ArticleTable'
 import Wrapper from "../../testing/Wrapper";
 
+describe('<ArticleTable /> Component Testing', () => {
+    it('Should render ArticleTable component in the DOM', async () => {
+        render(<Wrapper><ArticleTable /></Wrapper>)
+        const articleTableComponent = screen.getByTestId('ArticleTableComponent')
+        expect(articleTableComponent).toBeInTheDocument()
+    })
 
-describe('ArticleTable Component Testing', () => {
-    it('Should render \'Articles\' title', async () => {
+    it('Should have \'Articles\' text', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
         const articlesElement = screen.getByText(/Articles/i)
         expect(articlesElement).toBeInTheDocument()
     })
 
-    it('Should render \'Title\' in table header', async () => {
-        render(<Wrapper><ArticleTable /></Wrapper>)
-        const titleElement = screen.getByText(/Title/i)
-        expect(titleElement).toBeInTheDocument()
-    })
-
-    it('Should render \'Author\' in table header', async () => {
+    it('Should have \'Author\' text', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
         const authorElement = screen.getByText(/Author/i)
         expect(authorElement).toBeInTheDocument()
     })
 
-    it('Should render \'Author\' in table header', async () => {
+    it('Should have \'Created At\' text', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
-        const authorElement = screen.getByText(/Author/i)
-        expect(authorElement).toBeInTheDocument()
-    })
-
-    it('Should render \'Created At\' in table header', async () => {
-        render(<Wrapper><ArticleTable /></Wrapper>)
-        const createdAtElement = screen.getByText(/created at/i)
+        const createdAtElement = screen.getByText(/Created At/i)
         expect(createdAtElement).toBeInTheDocument()
     })
 
-    it('Should render \'Actions\' in table header', async () => {
+    it('Should have \'Actions\' text', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
-        const actionsElement = screen.getByText(/actions/i)
+        const actionsElement = screen.getByText(/Actions/i)
         expect(actionsElement).toBeInTheDocument()
     })
 
-    it('Should render \'Add New\' button', async () => {
+    it('Should have \'ADD NEW\' button', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
-        const addNewButton = screen.getByText(/add new/i)
+        const addNewButton = screen.getByText(/ADD NEW/i)
         expect(addNewButton).toBeInTheDocument()
     })
 
-    it('Should render \'article details form\' when clicking \'Add New\' button', async () => {
+    it('Should render <ArticleForm /> component when clicking \'ADD NEW\' button', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
-        const addNewButton = screen.getByText(/add new/i)
+        const addNewButton = screen.getByRole('button', {
+            name: /ADD NEW/i
+        })
         fireEvent.click(addNewButton)
-        const articleForm = screen.getByText(/ARTICLE DETAILS/i)
-        expect(articleForm).toBeInTheDocument()
+
+        const articleFormComponent = screen.getByTestId('ArticleFormComponent')
+        expect(articleFormComponent).toBeInTheDocument()
     })
 
-    // it('Should render \'article details form\' when clicking \'edit button\' button', async () => {
-    //     render(<Wrapper><ArticleTable /></Wrapper>)
-    //     const editButton = screen.getByTestId('editButton')
-    //     fireEvent.click(editButton)
-    //     const articleForm = screen.getByText(/ARTICLE DETAILS/i)
-    //     expect(articleForm).toBeInTheDocument()
-    // })
-
-    it('Should render 3 articles with MOCK HTTP request', async () => {
+    it('Should render correct fields of <ArticleForm /> component on  when clicking \'ADD NEW\' button', async () => {
         render(<Wrapper><ArticleTable /></Wrapper>)
-        const articleRow = await screen.findByTestId('articleRow')
-        expect(articleRow).toBeInTheDocument()
+        const addNewButton = screen.getByRole('button', {
+            name: /ADD NEW/i
+        })
+
+        await act(() => {
+            fireEvent.click(addNewButton)
+        })
+
+        const articleDetailsElement = screen.getByRole('heading', {
+            name: /article details/i
+        })
+        expect(articleDetailsElement).toBeInTheDocument()
+
+        const isbnElement = screen.getByRole('heading', {
+            name: /isbn/i
+        })
+        expect(isbnElement).toBeInTheDocument()
+
+        const titleElement = screen.getByRole('heading', {
+            name: 'Title'
+        })
+        expect(titleElement).toBeInTheDocument()
+
+        const subtitleElement = screen.getByRole('heading', {
+            name: /subtitle/i
+        })
+        expect(subtitleElement).toBeInTheDocument()
+
+        const authorElement = screen.getByRole('heading', {
+            name: 'Author'
+        })
+        expect(authorElement).toBeInTheDocument()
+
+        const publisherElement = screen.getByRole('heading', {
+            name: /publisher/i
+        })
+        expect(publisherElement).toBeInTheDocument()
+
+        const pagesElement = screen.getByRole('heading', {
+            name: /pages/i
+        })
+        expect(pagesElement).toBeInTheDocument()
+
+        const descriptionElement = screen.getByRole('heading', {
+            name: /description/i
+        })
+        expect(descriptionElement).toBeInTheDocument()
+
+        const websiteElement = screen.getByRole('heading', {
+            name: /website/i
+        })
+        expect(websiteElement).toBeInTheDocument()
+
+        const confirmButton = screen.getByRole('button', {
+            name: /confirm/i
+        })
+        expect(confirmButton).toBeInTheDocument()
+    })
+
+    it('Should provide validation message of \'isbn\' and \'title\' fields when clicking \'CONFIRM\' button', async () => {
+        render(<Wrapper><ArticleTable /></Wrapper>)
+        const addNewButton = screen.getByRole('button', {
+            name: /ADD NEW/i
+        })
+
+        await act(() => {
+            fireEvent.click(addNewButton)
+        })
+
+        const confirmButton = screen.getByRole('button', {
+            name: /confirm/i
+        })
+
+        await act(() => {
+            fireEvent.click(confirmButton)
+        })
+
+        const isbnValidationMessage = screen.getByTestId('isbnValidationMessage')
+        expect(isbnValidationMessage).toBeInTheDocument()
+
+        const titleValidationMessage = screen.getByTestId('titleValidationMessage')
+        expect(titleValidationMessage).toBeInTheDocument()
+    })
+
+    it('Validation message should disappear if \'isbn\' and \'title\' fields were filled', async () => {
+        render(<Wrapper><ArticleTable /></Wrapper>)
+        const addNewButton = screen.getByRole('button', {
+            name: /ADD NEW/i
+        })
+
+        await act(() => {
+            fireEvent.click(addNewButton)
+        })
+
+        const confirmButton = screen.getByRole('button', {
+            name: /confirm/i
+        })
+
+        await act(() => {
+            fireEvent.click(confirmButton)
+        })
+
+        const isbnValidationMessage = screen.getByTestId('isbnValidationMessage')
+        expect(isbnValidationMessage).not.toBeEmptyDOMElement()
+
+        const titleValidationMessage = screen.getByTestId('titleValidationMessage')
+        expect(titleValidationMessage).not.toBeEmptyDOMElement()
+
+        const isbnInput = screen.getByPlaceholderText(/Please enter isbn/i)
+        const titleInput= screen.getByPlaceholderText(/Please enter title/i)
+
+        await act(() => {
+            fireEvent.change(isbnInput, {
+                target: {
+                    value: 'type something in the isbn field'
+                }
+            })
+        })
+
+        await act(() => {
+            fireEvent.change(titleInput, {
+                target: {
+                    value: 'type something in the title field'
+                }
+            })
+        })
+        expect(isbnValidationMessage).toBeEmptyDOMElement()
+        expect(titleValidationMessage).toBeEmptyDOMElement()
+    })
+
+    it('Should disappear when clicking gray bg', async () => {
+        render(<Wrapper><ArticleTable /></Wrapper>)
+        const addNewButton = screen.getByRole('button', {
+            name: /ADD NEW/i
+        })
+
+        await act(() => {
+            fireEvent.click(addNewButton)
+        })
+
+        const grayBgElement = screen.getByTestId('grayBg')
+
+        await act(() => {
+            fireEvent.click(grayBgElement)
+        })
+        expect(grayBgElement).not.toBeInTheDocument()
     })
 })

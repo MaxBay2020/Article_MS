@@ -36,7 +36,7 @@ const Profile = ({email}) => {
 
     return (
         <>
-            <div>
+            <div data-testid='profile'>
                 <IconButton
                     size="small"
                     aria-label="account of current user"
@@ -46,7 +46,7 @@ const Profile = ({email}) => {
                     color="inherit"
                 >
                     <ProfileButton>
-                        <Typography sx={{color: '#fff'}} variant='h6'>{email.substring(0, 2)}</Typography>
+                        <Typography sx={{color: '#fff'}} variant='h6'>{email?.substring(0, 2)}</Typography>
                     </ProfileButton>
                 </IconButton>
                 <Menu
